@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, useWindowDimensions} from 'react-native';
 import Animated from 'react-native-reanimated';
+import memoize from 'memoize-one';
 
 import type MovieType from '@app/types/Movie';
 
@@ -10,8 +11,10 @@ interface PosterProps {
 }
 
 const Poster = ({borderRadius, movie}: PosterProps) => {
+    const {width, height} = useWindowDimensions();
+    const styles = getStyles(width, height);
     return (
-        <>
+        <View style={styles.container}>
             <Animated.Image
                 source={{uri: movie.poster}}
                 style={[styles.image, {borderRadius: borderRadius || 8}]}
@@ -22,46 +25,52 @@ const Poster = ({borderRadius, movie}: PosterProps) => {
                     movie.reviews?.length || 0
                 }`}</Text>
             </View>
-        </>
+        </View>
     );
 };
 
-const styles = StyleSheet.create({
-    content: {
-        padding: 16,
-        paddingTop: 20,
-        borderRadius: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-        width: '100%',
-    },
-    name: {
-        color: 'white',
-        fontSize: 34,
-        lineHeight: 41,
-        fontWeight: 'bold',
-        textShadowColor: '#000',
-        textShadowOffset: {
-            width: 1,
-            height: 2,
+const getStyles = memoize((width: number, height: number) =>
+    StyleSheet.create({
+        container: {
+            marginVertical: 45,
         },
-        textShadowRadius: 2,
-        flex: 1,
-    },
-    reviews: {
-        color: 'white',
-        fontSize: 18,
-        textShadowColor: '#000',
-        textShadowOffset: {
-            width: 1,
-            height: 2,
+        content: {
+            padding: 16,
+            paddingTop: 20,
+            borderRadius: 8,
+            borderColor: '#fff',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            width: '100%',
         },
-        textShadowRadius: 2,
-    },
-    image: {
-        ...StyleSheet.absoluteFillObject,
-        width: undefined,
-        height: undefined,
-    },
-});
+        name: {
+            color: 'white',
+            fontSize: 34,
+            lineHeight: 41,
+            fontWeight: 'bold',
+            textShadowColor: '#000',
+            textShadowOffset: {
+                width: 1,
+                height: 2,
+            },
+            textShadowRadius: 2,
+            flex: 1,
+        },
+        reviews: {
+            color: 'white',
+            fontSize: 18,
+            textShadowColor: '#000',
+            textShadowOffset: {
+                width: 1,
+                height: 2,
+            },
+            textShadowRadius: 2,
+        },
+        image: {
+            ...StyleSheet.absoluteFillObject,
+            width: undefined,
+            height: height / 2,
+        },
+    }),
+);
 
 export default Poster;

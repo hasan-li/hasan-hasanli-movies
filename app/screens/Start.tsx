@@ -42,11 +42,11 @@ const Start = () => {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView>
-                <ScrollView contentInsetAdjustmentBehavior="automatic">
+                <ScrollView contentInsetAdjustmentBehavior="always">
                     {movies.map((movie, index) => (
                         <Movie
                             activeMovieId={activeMovieId}
-                            key={movie.name}
+                            key={movie.id}
                             index={index}
                             movie={movie}
                             open={open}

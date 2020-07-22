@@ -43,6 +43,7 @@ const Movie = ({activeMovieId, index, movie, open}: MovieProps) => {
     const startTransition = async () => {
         if (container.current) {
             const position = await measure(container.current.getNode());
+            console.log('index', index);
             open(index, movie, position);
         }
     };
@@ -78,8 +79,8 @@ const getStyles = memoize((width: number, height: number) =>
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
-            borderWidth: 1,
-            borderColor: 'rgba(0, 0, 0, 0.1)',
+            borderWidth: 0,
+            borderColor: '#fff',
         },
         content: {
             position: 'absolute',

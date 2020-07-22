@@ -134,9 +134,11 @@ const Modal = ({movie, position, close}: ModalProps) => {
                 <View style={styles.content}>
                     <ScrollView>
                         <Text style={styles.paragraph}>
-                            <Text style={{fontWeight: 'bold'}}>
+                            <Text style={styles.header}>
                                 {`${titleCase(movie.name)} `}
                             </Text>
+                        </Text>
+                        <Text style={styles.paragraph}>
                             <Text style={styles.paragraph}>
                                 {movie.description}
                             </Text>
@@ -155,6 +157,12 @@ const styles = StyleSheet.create({
     content: {
         padding: 16,
         flex: 1,
+    },
+    header: {
+        fontSize: 30,
+        marginVertical: 106,
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
     paragraph: {
         fontSize: 24,
